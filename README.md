@@ -10,8 +10,8 @@
 
 <p>The program is able to perform the following fucntions:</p>
 
-#### 1. Get All Tweets
-<p>To display the text and the creation time of all tweets, click the Get button in front of the "Get All Tweets" label.</p>
+> #### 1. Get All Tweets
+><p>To display the text and the creation time of >all tweets, click the Get button in front of the >"Get All Tweets" label.</p>
     
 #### 2. Get All User ID's
 <p>To display the user ID's of all the tweets, click the Get button in front of the "Get All User ID's" label.</p>
@@ -28,5 +28,5 @@
 #### 6. Delete a tweet
 To delete a tweet with a given ID, enter the ID in the field in front of the "Delete a tweet" label.</p>
     
-<p>To clear the console, click Clear Console.</p>
+>To clear the console, click Clear Console.
 
