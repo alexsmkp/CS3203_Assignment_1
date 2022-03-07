@@ -46,6 +46,11 @@ function loadJson(file)
     jsonData = JSON.parse(rawData);
 }
 
+function testPrint()
+{
+   console.log("test code");
+}
+
 
 
 
