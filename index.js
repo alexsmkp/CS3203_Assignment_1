@@ -24,6 +24,9 @@ const port = 3000;
 //Initialize the variable that will carry the output data for the front-end display.
 let passedData = '';
 let twitterList = '';
+let jsonData;
+const defaultName = 'favs.json'; //The default JSON file
+let fileName = defaultName; 
 
 //Custom function that updates the tweet list in 'twitterList' 
 function updateTwitter()
@@ -35,11 +38,16 @@ function updateTwitter()
     twitterList = sb2.toString(); 
 }
 
+function loadJson(file)
+{
+    //Read the JSON file.
+    let rawData = fs.readFileSync(`./${file}`);
+    //Convert the JSON file into a JS object.
+    jsonData = JSON.parse(rawData);
+}
 
-//Read the JSON file.
-let rawData = fs.readFileSync('./favs.json');
-//Convert the JSON file into a JS object.
-let jsonData = JSON.parse(rawData);
+
+
 
 //middleware functions
 app.use(express.static('public'));
@@ -48,8 +56,9 @@ app.use(express.urlencoded({extended: true}));
 //Listener for a GET request that renders the front-end page in the default state.
 app.get('/', (req,res)=>
 {
+    loadJson(fileName);
     updateTwitter();
-    res.render('index',{passedData,twitterList});
+    res.render('index',{passedData,twitterList,fileName});
 }); 
 
 //Listener for a POST request.
@@ -62,6 +71,23 @@ app.post('/', (req,res)=>
     //The switch allows to detremine which button triggered the POST request by comparing the received query parameter.
     switch(req.query.action)
     {
+        case "save_file":
+        {
+            saveFileName = req.body.file_name;
+            fs.writeFileSync(`./${saveFileName}.json`,JSON.stringify(jsonData, null, 2));
+            break;
+        }
+        case "load_file": 
+        {
+            fileName = req.body.file_name;
+            loadJson(fileName);  
+            break;  
+        }
+        case "clear":
+        {
+            sb1.append("");
+            break;
+        }
         case "get_all_tweets": //Outputs all tweets with the creation timestamp by looping through the array of tweet objects.
         {
 
@@ -226,7 +252,7 @@ app.post('/', (req,res)=>
     passedData = sb1.toString();
     updateTwitter();
     //Rednder the page and pass the updated string.
-    res.render('index',{passedData, twitterList});
+    res.render('index',{passedData, twitterList,fileName});
     //Reset the output string.
     passedData = '';
 });

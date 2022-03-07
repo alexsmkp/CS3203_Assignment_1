@@ -89,11 +89,28 @@
             <div class="col">
                 <label>Tweets</label>
                 <textarea class="custom-tweetarea" readonly><%=twitterList%></textarea>
+                <form class="pt-2" action="/?action=load_file" method="POST">
+                    <input class="custom-input" type="text" size="5" value="<%=fileName%>" readonly >
+                    <input class="custom-input" type="file" title=" " accept=".json" name="file_name">
+                    <button class="custom-button">Load</button>   
+                </form>
+                <form class="pt-2" action="/?action=save_file" method="POST">
+                    <label>Save to a new JSON file</label>
+                    <input class="custom-input" placeholder="File name" type="text" value="" size="7" maxlength="15" name="file_name">
+                    <button onclick="save_ok()" class="custom-button">Save</button>   
+                </form>
+                <script>
+                    function save_ok()
+                    {
+                        confirm("The file was saved!");
+                    }
+                </script>
+                
             </div>
         </div>
         <div class="row pt-5 pb-5"></div>
         <div class="row pt-5 pb-2">
-            <form class="" action="/" method="GET">
+            <form class="" action="/?action=clear" method="POST">
                 <button class="custom-button">Clear console</button>
             </form>
         </div>
